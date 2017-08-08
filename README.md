@@ -176,6 +176,14 @@ title = "第一次用 IPFS 就上手"
 theme = "ananke"
 ```
 
+# 快取
+
+把內容快取到本地端，並且提供給其他人。
+
+```
+ipfs pin add -r QmT7TX5vGmFz86V8cDkPuTss1vp4qTXeaziGZrjdJhURFf
+```
+
 # 和硬碟上的目錄保持同步
 
 # 我還不懂的部份
@@ -189,6 +197,7 @@ theme = "ananke"
 - https://blog.acolyer.org/2015/10/05/ipfs-content-addressed-versioned-p2p-file-system
 - https://discuss.ipfs.io/t/how-does-files-api-ipfs-files-command-work/344/3
 - https://ipfs.io/ipfs/QmdPtC3T7Kcu9iJg6hYzLBWR5XCDcYMY7HV685E3kH3EcS/2015/09/15/hosting-a-website-on-ipfs/
+- https://qtum.org/zh/blog/ru-he-shi-yong-xing-ji-wen-jian-chuan-shu-wang-luo-ipfs-da-jian-qu-kuai-lian-fu-wu
 
 # License 版權聲明
 
