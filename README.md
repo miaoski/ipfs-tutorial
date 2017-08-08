@@ -20,6 +20,8 @@ IPFS (星際檔案系統) 是用來取代已經太過集中化的 HTTP 的一種
 
 # 下載、安裝
 
+## 下載
+
 下載很簡單，請直接到 [IPFS 官網](https://ipfs.io/) 或直接 [點這裡下載](https://dist.ipfs.io/#go-ipfs)。我直接下載了 go-ipfs 0.4.10, Mac OS X 請下載 Darwin amd64, Ubuntu 請下載 Linux amd64。
 
 ## 安裝
@@ -47,7 +49,7 @@ ipfs config edit
 ```
 找到 `"StorageMax": "10GB",` 這行，把 10GB 換成你要的大小即可。
 
-# 新增第一個檔案
+# 新增檔案
 
 先來隨便新增一個檔案吧。打開記事本，隨便打幾行字 `lorem ipsum dolor sit amet` 存成 `README.md`。
 
@@ -63,7 +65,7 @@ lorem ipsum dolor sit amet
 
 如果要分享給沒有安裝 IPFS 的朋友(建議順便推坑!) 可以請他使用 IPFS Gateway: https://ipfs.io/ipfs/QmQhK6KAVA2nJgFYzf7D1yHdH11GiGJv6zRTUhoVZwXpDd 把後面的 HASH 換成你剛剛新增的檔案的 HASH，就可以了!
 
-# 我比較習慣目錄
+## 我比較習慣目錄
 
 大家都還是比較習慣目錄結構吧？已經 `ipfs add` 的檔案，可以被放進目錄裡。
 ```
@@ -78,9 +80,21 @@ lorem ipsum dolor sit amet
 ```
 我目前還不知道怎麼把目錄 export 出去，讓別人也可用使用同樣的目錄結構。
 
+## 上傳一整個目錄
+
+使用 `ipfs add -r` 可以上傳一整個目錄。比方說，這篇教學可以用這種方式上傳 (**小心** 不要把 .git/ 下面的東西都傳上去了!)
+```
+$ ipfs add -r ipfs-tutorial-taiwan-mandarin
+added QmdpYD8hejksA5SHNdRfDzE2EYzpSkbazyVAJq5hRwbKtp ipfs-tutorial-taiwan-mandarin/README.md
+added QmWe7m2K8DThCUTPuw5KcbYvpAwogScXt8gazfG7QiRpSo ipfs-tutorial-taiwan-mandarin
+```
+這樣就可以用下列方式取得 `README.md` 的內容:
+1. ipfs cat /ipfs/QmdpYD8hejksA5SHNdRfDzE2EYzpSkbazyVAJq5hRwbKtp
+2. ipfs cat /ipfs/QmWe7m2K8DThCUTPuw5KcbYvpAwogScXt8gazfG7QiRpSo/README.md
+
 # 我在 IPFS 上的第一個網頁
 
-# 怎樣和硬碟上的資料保持同步？
+# 和硬碟上的目錄保持同步
 
 # 我還不懂的部份
 
