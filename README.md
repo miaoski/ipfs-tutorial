@@ -5,8 +5,8 @@
 本篇教學的網址是:
 
 - (gitpage) https://miaoski.github.io/ipfs-tutorial/
-- (IPFS) 
-- (IPFS Gateway)
+- (IPFS) /ipns/QmNmfAqjiQgdLJscpM3FufbaXY9QEqWZiWqDTbsrUjSKDR/
+- (IPFS Gateway) https://ipfs.io/ipns/QmNmfAqjiQgdLJscpM3FufbaXY9QEqWZiWqDTbsrUjSKDR/
 
 # 為什麼要使用 IPFS
 
