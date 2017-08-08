@@ -2,11 +2,16 @@
 
 因為 IPFS 的繁中資料實在太少了，決定邊學習邊筆記。
 
-目前我還不會把 git 和 IPFS 連在一起用，所以邊修改筆記、邊 publish 到 IPFS 上。
+本篇教學的網址是:
+
+- (gitpage) https://miaoski.github.io/ipfs-tutorial/
+- (IPFS) 
+- (IPFS Gateway)
 
 # 為什麼要使用 IPFS
 
 IPFS (星際檔案系統) 是用來取代已經太過集中化的 HTTP 的一種方案，這裡不做一般性的介紹，因為其它 blog / Wikipedia 上都有寫了。我想使用 IPFS 的理由是:
+
 1. 網路過度集中化，使用者自願放棄自由，請參考 [網際網路已經完蛋了](https://www.inside.com.tw/2017/08/07/internet-is-too-centralized)
 2. 依賴單一公司提供的平台所發佈的文章，即使沒有反政府、侵權、政治不正確 blah blah 還是有各種不同的可能被下架，而你已經在 EULA 中同意不去追究了。
 3. Google Blogspot, Tumblr, Facebook Blog 提供的免費、高品質 blog，仍然有上述的疑慮。
@@ -15,6 +20,7 @@ IPFS (星際檔案系統) 是用來取代已經太過集中化的 HTTP 的一種
 去中心化，才能有民主、自由的網路。即使如此，去中心化仍然需要網路中立性的支持，不然你的 ISP 仍然可以獨厚(加速)大公司的網站。
 
 本篇教學 **不會** 論述以下主題：
+
 - 免責或匿名性。這是另一個大題目，去中心化不代表你可以匿名。
 - 挖礦、區塊鏈、或任何虛擬貨幣。
 
@@ -27,6 +33,7 @@ IPFS (星際檔案系統) 是用來取代已經太過集中化的 HTTP 的一種
 ## 安裝
 
 直接在命令列下打這些指令就好:
+
 ```
 $ ipfs init     # 會在 ~/.ipfs 開一個目錄，存放區塊檔，預設是最大 10GB
 
@@ -43,10 +50,12 @@ $ ipfs id       # 列出自己的 ID, 但其實不需要太介意
 ```
 
 想修改預設的暫存大小的話，請下這個指令:
+
 ```bash
 export EDITOR=/usr/bin/vim
 ipfs config edit
 ```
+
 找到 `"StorageMax": "10GB",` 這行，把 10GB 換成你要的大小即可。
 
 # 新增檔案
@@ -54,6 +63,7 @@ ipfs config edit
 先來隨便新增一個檔案吧。打開記事本，隨便打幾行字 `lorem ipsum dolor sit amet` 存成 `README.md`。
 
 `ipfs add` 可以把檔案加進 IPFS 裡，它會傳回一組 HASH, 那個 HASH 就是這個檔案的唯一識別代碼了。
+
 ```
 $ ipfs add README.md
 added QmQhK6KAVA2nJgFYzf7D1yHdH11GiGJv6zRTUhoVZwXpDd README.md
@@ -61,6 +71,7 @@ added QmQhK6KAVA2nJgFYzf7D1yHdH11GiGJv6zRTUhoVZwXpDd README.md
 $ ipfs cat /ipfs/QmQhK6KAVA2nJgFYzf7D1yHdH11GiGJv6zRTUhoVZwXpDd
 lorem ipsum dolor sit amet
 ```
+
 即使你換到別台機器，一樣可以用 `ipfs cat /ipfs/QmQhK6KAVA2nJgFYzf7D1yHdH11GiGJv6zRTUhoVZwXpDd` 看到這個檔案的內容。
 
 如果要分享給沒有安裝 IPFS 的朋友(建議順便推坑!) 可以請他使用 IPFS Gateway: https://ipfs.io/ipfs/QmQhK6KAVA2nJgFYzf7D1yHdH11GiGJv6zRTUhoVZwXpDd 把後面的 HASH 換成你剛剛新增的檔案的 HASH，就可以了!
@@ -68,6 +79,7 @@ lorem ipsum dolor sit amet
 ## 我比較習慣目錄
 
 大家都還是比較習慣目錄結構吧？已經 `ipfs add` 的檔案，可以被放進目錄裡。
+
 ```
 $ ipfs files mkdir /SmartCity   # 開一個目錄
 $ ipfs files cp /ipfs/QmQhK6KAVA2nJgFYzf7D1yHdH11GiGJv6zRTUhoVZwXpDd /SmartCity/README.md
@@ -78,21 +90,91 @@ README.md
 $ ipfs files read /SmartCity/README.md
 lorem ipsum dolor sit amet
 ```
+
 我目前還不知道怎麼把目錄 export 出去，讓別人也可用使用同樣的目錄結構。
 
 ## 上傳一整個目錄
 
 使用 `ipfs add -r` 可以上傳一整個目錄。比方說，這篇教學可以用這種方式上傳 (**小心** 不要把 .git/ 下面的東西都傳上去了!)
+
 ```
 $ ipfs add -r ipfs-tutorial-taiwan-mandarin
 added QmdpYD8hejksA5SHNdRfDzE2EYzpSkbazyVAJq5hRwbKtp ipfs-tutorial-taiwan-mandarin/README.md
 added QmWe7m2K8DThCUTPuw5KcbYvpAwogScXt8gazfG7QiRpSo ipfs-tutorial-taiwan-mandarin
 ```
+
 這樣就可以用下列方式取得 `README.md` 的內容:
+
 1. ipfs cat /ipfs/QmdpYD8hejksA5SHNdRfDzE2EYzpSkbazyVAJq5hRwbKtp
 2. ipfs cat /ipfs/QmWe7m2K8DThCUTPuw5KcbYvpAwogScXt8gazfG7QiRpSo/README.md
 
 # 我在 IPFS 上的第一個網頁
+
+出於莫名的原因，我決定不要使用最常見的 Jekyll 。以下範例是 Hugo 做的 :)
+
+## 安裝 Hugo
+
+參考 [Hugo官網](http://gohugo.io/getting-started/quick-start/) 的說明，在 Mac 上安裝 Hugo:
+
+```
+$ brew install hugo
+Updating Homebrew...
+Warning: hugo 0.26 is already installed
+$ hugo version
+Hugo Static Site Generator v0.26 darwin/amd64 BuildDate: 2017-08-08T14:55:38+08:00
+$ hugo new site ipfs-tutorial-zh-TW
+Congratulations! Your new Hugo site is created in /Users/miaoski/github/ipfs-tutorial-zh-TW.
+$ git init
+Initialized empty Git repository in /Users/miaoski/github/ipfs-tutorial-zh-TW/.git/
+$ git submodule add https://github.com/budparr/gohugo-theme-ananke.git themes/ananke
+Cloning into '/Users/miaoski/github/ipfs-tutorial-zh-TW/themes/ananke'...
+$ echo 'theme = "ananke"' >> config.toml
+```
+
+修改 `config.toml` 設定一下 title 和語系什麼的，就可以了。
+
+## 新增 blog 文章
+
+```
+$ hugo new posts/ipfs-tutorial.md
+/Users/miaoski/github/ipfs-tutorial-zh-TW/content/posts/ipfs-tutorial.md created
+$ cat ../ipfs-tutorial/README.md >> ./content/posts/ipfs-tutorial.md
+```
+
+修改一下，把 `draft: true` 改成 `draft: false` 再執行一次 `hugo` 就可以 render 出網頁了。
+
+## 把部落格新增到 IPFS 上
+
+依據 hugo 的建議，先 `rm -fr public/` 再重新執行 `hugo` 比較好...
+
+```bash
+$ rm -fr ./public/
+$ hugo
+$ ipfs add -r ./public/
+added QmW7dJkAjtLgUtJcgUrTPC2jSLTD8uS4bfzPPXYdsZGhFN public/posts
+added QmecA1oy5du9TwNrJrwxjq5emUdG7jbukv8Pzuo2q8CjRc public/tags
+added QmT7TX5vGmFz86V8cDkPuTss1vp4qTXeaziGZrjdJhURFf public
+```
+
+拿到網站的 HASH 後，必須註冊 **IPNS** ，因為每次更新部落格的內容，上面的 HASH 都會變，我們需要一個固定的 ID 指向最新的 HASH 。以本文為例：
+
+```bash
+$ ipfs name publish QmT7TX5vGmFz86V8cDkPuTss1vp4qTXeaziGZrjdJhURFf
+Published to QmNmfAqjiQgdLJscpM3FufbaXY9QEqWZiWqDTbsrUjSKDR: /ipfs/QmT7TX5vGmFz86V8cDkPuTss1vp4qTXeaziGZrjdJhURFf 
+$ ipfs name resolve QmNmfAqjiQgdLJscpM3FufbaXY9QEqWZiWqDTbsrUjSKDR
+/ipfs/QmT7TX5vGmFz86V8cDkPuTss1vp4qTXeaziGZrjdJhURFf
+```
+
+以後每次更新完網站，都要重新 `ipfs add -r ./public/` 一 次，然後再執行 `ipfs name publish ...` ，這樣`/ipns/QmNmfAqjiQgdLJscpM3FufbaXY9QEqWZiWqDTbsrUjSKDR` 才會指向最新的 HASH 哦! (注意是 **IPNS** 不要搞錯!)
+
+順便更新 `config.toml`:
+
+```
+baseURL = "https://ipfs.io/ipns/QmNmfAqjiQgdLJscpM3FufbaXY9QEqWZiWqDTbsrUjSKDR/"
+languageCode = "zh-tw"
+title = "第一次用 IPFS 就上手"
+theme = "ananke"
+```
 
 # 和硬碟上的目錄保持同步
 
@@ -100,11 +182,13 @@ added QmWe7m2K8DThCUTPuw5KcbYvpAwogScXt8gazfG7QiRpSo ipfs-tutorial-taiwan-mandar
 
 - BitSwap
 - DHT
+- 把 git repo 和 IPFS 整合在一起
 
 # 參考資料
 
 - https://blog.acolyer.org/2015/10/05/ipfs-content-addressed-versioned-p2p-file-system
 - https://discuss.ipfs.io/t/how-does-files-api-ipfs-files-command-work/344/3
+- https://ipfs.io/ipfs/QmdPtC3T7Kcu9iJg6hYzLBWR5XCDcYMY7HV685E3kH3EcS/2015/09/15/hosting-a-website-on-ipfs/
 
 # License 版權聲明
 
