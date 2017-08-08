@@ -59,7 +59,9 @@ added QmQhK6KAVA2nJgFYzf7D1yHdH11GiGJv6zRTUhoVZwXpDd README.md
 $ ipfs cat /ipfs/QmQhK6KAVA2nJgFYzf7D1yHdH11GiGJv6zRTUhoVZwXpDd
 lorem ipsum dolor sit amet
 ```
-即使你換到別台機器，一樣可以用 `ipfs cat /ipfs/QmQh...XpDd` 看到這個檔案的內容。
+即使你換到別台機器，一樣可以用 `ipfs cat /ipfs/QmQhK6KAVA2nJgFYzf7D1yHdH11GiGJv6zRTUhoVZwXpDd` 看到這個檔案的內容。
+
+如果要分享給沒有安裝 IPFS 的朋友(建議順便推坑!) 可以請他使用 IPFS Gateway: https://ipfs.io/ipfs/QmQhK6KAVA2nJgFYzf7D1yHdH11GiGJv6zRTUhoVZwXpDd 把後面的 HASH 換成你剛剛新增的檔案的 HASH，就可以了!
 
 # 我比較習慣目錄
 
