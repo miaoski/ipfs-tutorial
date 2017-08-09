@@ -24,6 +24,8 @@ IPFS (星際檔案系統) 是用來取代已經太過集中化的 HTTP 的一種
 - 免責或匿名性。這是另一個大題目，去中心化不代表你可以匿名。
 - 挖礦、區塊鏈、或任何虛擬貨幣。
 
+完整的介紹性文章，可以參考 InfoQ 的 [IPFS：替代HTTP的分布式网络协议](http://www.infoq.com/cn/articles/ipfs) 。
+
 # 下載、安裝
 
 ## 下載
@@ -184,7 +186,21 @@ theme = "ananke"
 ipfs pin add -r QmT7TX5vGmFz86V8cDkPuTss1vp4qTXeaziGZrjdJhURFf
 ```
 
-# 和硬碟上的目錄保持同步
+# TXT
+
+$ host -t TXT miaoski.idv.tw
+miaoski.idv.tw descriptive text "dnslink=/ipns/QmNmfAqjiQgdLJscpM3FufbaXY9QEqWZiWqDTbsrUjSKDR"
+
+$ ipfs name resolve miaoski.idv.tw
+Error: Could not resolve name (recursion limit exceeded).
+
+$ ipfs dns -r atnnn.com
+Error: not a valid domain name
+
+$ ipfs dns atnnn.com
+Error: Could not resolve name (recursion limit exceeded).
+
+https://ipfs.io/ipns/miaoski.idv.tw/
 
 # 我還不懂的部份
 
