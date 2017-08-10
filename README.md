@@ -135,6 +135,8 @@ Debian 系的 Linux 請愛用 `sudo ufw allow 4001` 即可。
 
 出於莫名的原因，我決定不要使用最常見的 Jekyll 。以下範例是 Hugo 做的 :)
 
+Huge 後面還有使用 ipfs 範例中的 mdown 來 render 的例子。
+
 ## 安裝 Hugo
 
 參考 [Hugo官網](http://gohugo.io/getting-started/quick-start/) 的說明，在 Mac 上安裝 Hugo:
@@ -156,7 +158,7 @@ $ echo 'theme = "ananke"' >> config.toml
 
 修改 `config.toml` 設定一下 title 和語系什麼的，就可以了。
 
-## 新增 blog 文章
+### 新增 blog 文章
 
 ```
 $ hugo new posts/ipfs-tutorial.md
@@ -166,7 +168,7 @@ $ cat ../ipfs-tutorial/README.md >> ./content/posts/ipfs-tutorial.md
 
 修改一下，把 `draft: true` 改成 `draft: false` 再執行一次 `hugo` 就可以 render 出網頁了。
 
-## 把部落格新增到 IPFS 上
+### 把部落格新增到 IPFS 上
 
 依據 hugo 的建議，先 `rm -fr public/` 再重新執行 `hugo` 比較好...
 
@@ -179,7 +181,17 @@ added QmecA1oy5du9TwNrJrwxjq5emUdG7jbukv8Pzuo2q8CjRc public/tags
 added QmT7TX5vGmFz86V8cDkPuTss1vp4qTXeaziGZrjdJhURFf public
 ```
 
-拿到網站的 HASH 後，必須註冊 **IPNS** ，因為每次更新部落格的內容，上面的 HASH 都會變，我們需要一個固定的 ID 指向最新的 HASH 。以本文為例：
+請跳到 IPNS 一節閱讀。
+
+## mdown
+
+mdown 是 ipfs 範例中的 [markdown-viewer](https://github.com/ipfs/examples/tree/master/webapps/markdown-viewer) 是以 MIT 版權宣告的。有時候我們只是想分享一份簡單的 markdown，它十分輕量，render 出來的效果也不錯。它的背後是 StrapDownJS。
+
+本文的 [Github repo](https://github.com/miaoski/ipfs-tutorial) 已經把 mdown 加在裡面了，直接 `make` 就會看到 `ipfs add` 上去的 HASH。它也會寫在 `published-version` 檔案裡。接著我們可以用 IPNS 發佈它。
+
+## IPNS
+
+拿到網站的 HASH 後，建議註冊 **IPNS** ，因為每次更新部落格的內容，上面的 HASH 都會變，我們需要一個固定的 ID 指向最新的 HASH 。以本文為例：
 
 ```bash
 $ ipfs name publish QmT7TX5vGmFz86V8cDkPuTss1vp4qTXeaziGZrjdJhURFf
@@ -190,7 +202,7 @@ $ ipfs name resolve QmNmfAqjiQgdLJscpM3FufbaXY9QEqWZiWqDTbsrUjSKDR
 
 以後每次更新完網站，都要重新 `ipfs add -r ./public/` 一 次，然後再執行 `ipfs name publish ...` ，這樣`/ipns/QmNmfAqjiQgdLJscpM3FufbaXY9QEqWZiWqDTbsrUjSKDR` 才會指向最新的 HASH 哦! (注意是 **IPNS** 不要搞錯!)
 
-順便更新 `config.toml`:
+使用 hugo 的同學，順便更新 `config.toml`:
 
 ```
 baseURL = "https://ipfs.io/ipns/QmNmfAqjiQgdLJscpM3FufbaXY9QEqWZiWqDTbsrUjSKDR/"
