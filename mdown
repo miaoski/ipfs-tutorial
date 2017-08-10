@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>IPFS 教學和筆記</title>
+
+<script src="lib/jquery.min.js"></script>
+<script src="lib/marked.min.js"></script>
+<script src="lib/prettify.min.js"></script>
+<script src="lib/strapdown.js"></script>
+<script src="lib/params.js"></script>
+<link rel="stylesheet" href="lib/strapdown.css" />
+<link rel="stylesheet" href="lib/mdown-style.css" />
+<meta type="http-equiv" content="content/type: text/html; charset=UTF-8" />
+</head>
+<body>
+
+<xmp id="markdown" theme="" style="display:none;"></xmp>
+<h1 id="loading">Loading...</h1>
+
+<script>
+
+// set marked options
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: true,
+  tables: true,
+  breaks: false,
+  pedantic: false,
+})
+
+function render(path) {
+  var xmp = document.getElementById("markdown");
+
+  // set theme first.
+  var theme = getParameterByName("theme")
+  if (theme && theme && theme.length > 0) {
+    $(xmp).attr('theme', theme)
+  }
+
+  $.get(path, function(data) {
+    xmp.innerHTML = data;
+    strapdown(window, document)
+
+    // fix the navbar
+    $('.navbar-fixed-top')
+      .addClass('navbar-static-top')
+      .removeClass('navbar-fixed-top')
+
+    $('#loading').hide()
+
+    // set window title to first h1 or h2 in markdown text
+    document.title = document.querySelector("h1, h2").textContent;
+  })
+}
+
+var hash = window.location.hash.substring(1)
+if (hash.length > 0) {
+  render(hash)
+} else {
+  window.location.hash = "#README.md"
+  window.location.reload()
+}
+
+window.onhashchange = function(){
+  window.location.reload()
+}
+</script>
+</body>
+</html>
