@@ -23,6 +23,7 @@ IPFS (星際檔案系統) 是用來取代已經太過集中化的 HTTP 的一種
 
 - 免責或匿名性。這是另一個大題目，去中心化不代表你可以匿名。
 - 挖礦、區塊鏈、或任何虛擬貨幣。
+- ICO 特別是 IPFS 最近的 Filecoin ICO 。
 
 完整的介紹性文章，可以參考 InfoQ 的 [IPFS：替代HTTP的分布式网络协议](http://www.infoq.com/cn/articles/ipfs) 。
 
@@ -112,6 +113,8 @@ added QmWe7m2K8DThCUTPuw5KcbYvpAwogScXt8gazfG7QiRpSo ipfs-tutorial-taiwan-mandar
 
 # 我在 IPFS 上的第一個網頁
 
+**請注意** IPFS 的本質是分散式的檔案系統，如果只是要 host 分散式的部落格的話，可以使用 [ZeroNet](https://zeronet.io/) 。晚一點我會再寫一篇 ZeroNet 的介紹。
+
 出於莫名的原因，我決定不要使用最常見的 Jekyll 。以下範例是 Hugo 做的 :)
 
 ## 安裝 Hugo
@@ -178,19 +181,27 @@ title = "第一次用 IPFS 就上手"
 theme = "ananke"
 ```
 
-# 快取
+# 快取 (pin)
 
 把內容快取到本地端，並且提供給其他人。
 
 ```
-ipfs pin add -r QmT7TX5vGmFz86V8cDkPuTss1vp4qTXeaziGZrjdJhURFf
+ipfs pin add QmT7TX5vGmFz86V8cDkPuTss1vp4qTXeaziGZrjdJhURFf
 ```
+
+`add` 本身就是遞歸的，所有的子目錄都會被 pin 住。可以用 `ipfs pin ls` 看看本地端 pin 了什麼。 [這一篇](https://ipfs.io/ipfs/QmNZiPk974vDsPmQii3YbrMKfi12KTSNM7XMiYyiea4VYZ/example#/ipfs/QmP8WUPq2braGQ8iZjJ6w9di6mzgoTWyRLayrMRjjDoyGr/pinning/readme.md) 的指令都可以玩玩看。
 
 # TXT
 
+因為一串 HASH 真的很難記，所以可以用修改 DNS 的 TXT 欄的方式，讓使用者可以用 https://ipfs.io/ipns/miaoski.idv.tw/ 這種方式，存取到你的檔案或部落格。要特別注意， TXT 設定完後，如果你用筆電的話，不要太快離線，不然別人可能還來不及 cache 住 TXT 解析的內容。
+
+```
 $ host -t TXT miaoski.idv.tw
 miaoski.idv.tw descriptive text "dnslink=/ipns/QmNmfAqjiQgdLJscpM3FufbaXY9QEqWZiWqDTbsrUjSKDR"
+```
 
+下面的情況都是正常的。但是 `ipfs name resolve -r` 必須要能正確解析出 /ipfs/ 的位址，別人才看得到你公開的內容。
+```
 $ ipfs name resolve miaoski.idv.tw
 Error: Could not resolve name (recursion limit exceeded).
 
@@ -199,8 +210,9 @@ Error: not a valid domain name
 
 $ ipfs dns atnnn.com
 Error: Could not resolve name (recursion limit exceeded).
+```
 
-https://ipfs.io/ipns/miaoski.idv.tw/
+來試試看我的網頁吧! https://ipfs.io/ipns/miaoski.idv.tw/
 
 # 我還不懂的部份
 
