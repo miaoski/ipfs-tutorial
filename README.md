@@ -113,7 +113,25 @@ added QmWe7m2K8DThCUTPuw5KcbYvpAwogScXt8gazfG7QiRpSo ipfs-tutorial-taiwan-mandar
 
 # 我在 IPFS 上的第一個網頁
 
-**請注意** IPFS 的本質是分散式的檔案系統，如果只是要 host 分散式的部落格的話，可以使用 [ZeroNet](https://zeronet.io/) 。晚一點我會再寫一篇 ZeroNet 的介紹。
+IPFS 的本質是分散式的檔案系統，如果只是要 host 分散式的部落格的話，可以使用 [ZeroNet](https://zeronet.io/) 。晚一點我會再寫一篇 ZeroNet 的介紹。
+
+**請注意** 如果在 `pin` 或 `publish` 的過程中遇到任何問題，可能是防火牆的關係。跑 `ipfs daemon` 的時候，它會列出對外連線的 port 請在防火牆打開。
+
+```
+% ipfs daemon
+Initializing daemon...
+Adjusting current ulimit to 2048...
+Successfully raised file descriptor limit to 2048.
+Swarm listening on /ip4/127.0.0.1/tcp/4001
+Swarm listening on /ip4/192.168.2.1/tcp/4001
+Swarm listening on /ip4/220.xxx.xx.xxx/tcp/4001 ← 這個!!
+Swarm listening on /ip6/::1/tcp/4001
+API server listening on /ip4/127.0.0.1/tcp/5001
+Gateway (readonly) server listening on /ip4/127.0.0.1/tcp/8080
+Daemon is ready
+```
+
+Debian 系的 Linux 請愛用 `sudo ufw allow 4001` 即可。
 
 出於莫名的原因，我決定不要使用最常見的 Jekyll 。以下範例是 Hugo 做的 :)
 
