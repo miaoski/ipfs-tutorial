@@ -259,4 +259,4 @@ Error: Could not resolve name (recursion limit exceeded).
 
 # License 版權聲明
 
-我自己編寫的部份，全部使用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh_TW) 聲明。如果有引用他人的部份，請參考各該文件所屬的版權聲明。
+我自己編寫的部份，全部使用 [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0) 聲明。如果有引用他人的部份，請參考各該文件所屬的版權聲明。
