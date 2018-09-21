@@ -5,8 +5,9 @@
 本篇教學的網址是:
 
 - (gitpage) https://miaoski.github.io/ipfs-tutorial/
-- (IPFS) /ipns/miaoski.idv.tw/
+- (IPFS) /ipnfs/QmR2PvgrHny4ispfEVygvvWkNqwjbU7hareWda41ASF5wC
 - (IPFS Gateway) https://ipfs.io/ipns/miaoski.idv.tw/
+- (CloudFlare) https://ipfs.miaoski.idv.tw/
 
 # 為什麼要使用 IPFS
 
@@ -111,6 +112,16 @@ added QmWe7m2K8DThCUTPuw5KcbYvpAwogScXt8gazfG7QiRpSo ipfs-tutorial-taiwan-mandar
 1. ipfs cat /ipfs/QmdpYD8hejksA5SHNdRfDzE2EYzpSkbazyVAJq5hRwbKtp
 2. ipfs cat /ipfs/QmWe7m2K8DThCUTPuw5KcbYvpAwogScXt8gazfG7QiRpSo/README.md
 
+## 避免被垃圾回收 (Garbage Collection, GC)
+
+ipfs 會自動做垃圾回收，減少佔用的本機空間。為了避免我們剛發佈的網頁被垃圾回收，可以把整個目錄 pin 起來。
+
+```
+$ ipfs pin add -r /ipfs/QmWe7m2K8DThCUTPuw5KcbYvpAwogScXt8gazfG7QiRpSo
+```
+
+記得要 `pin` 的是目錄的 hash 不要貼錯了喲!
+
 # 我在 IPFS 上的第一個網頁
 
 IPFS 的本質是分散式的檔案系統，如果只是要 host 分散式的部落格的話，可以使用 [ZeroNet](https://zeronet.io/) 。晚一點我會再寫一篇 ZeroNet 的介紹。
@@ -179,6 +190,8 @@ $ ipfs add -r ./public/
 added QmW7dJkAjtLgUtJcgUrTPC2jSLTD8uS4bfzPPXYdsZGhFN public/posts
 added QmecA1oy5du9TwNrJrwxjq5emUdG7jbukv8Pzuo2q8CjRc public/tags
 added QmT7TX5vGmFz86V8cDkPuTss1vp4qTXeaziGZrjdJhURFf public
+$ ipfs pin add -r /ipfs/QmT7TX5vGmFz86V8cDkPuTss1vp4qTXeaziGZrjdJhURFf
+pinned QmT7TX5vGmFz86V8cDkPuTss1vp4qTXeaziGZrjdJhURFf recursively
 ```
 
 請跳到 IPNS 一節閱讀。
@@ -244,6 +257,40 @@ Error: Could not resolve name (recursion limit exceeded).
 
 來試試看我的網頁吧! https://ipfs.io/ipns/miaoski.idv.tw/
 
+# 推上 CloudFlare
+
+CloudFlare 在 2018.9.17 的時候和 IPFS 合作，提供入口及 SSL 憑證，應該會讓 IPFS 穩定許多。建議要發佈網頁的朋友，可以和 CloudFlare 連在一起。做法如下：
+
+1. 需要有自己的 domain name
+1. 可以修改 `TXT` 欄位 (像上面寫的 ipns 那樣)
+1. 把網頁內容丟進一個目錄裡，入口是 index.html
+1. 把網頁的網域名稱 CNAME 到 `www.cloudflare-ipfs.com`
+1. 加一個 `_dnslink.your.website` = `dnslink=/ipfs/<your_hash_here>`
+1. 上 https://www.cloudflare.com/distributed-web-gateway/#connectingyourwebsite 登錄
+
+舉例而言，
+
+1. 我在 DNS Server 上新增一個 `ipfs.miaoski.idv.tw`
+1. 把它 CNAME 到 `www.cloudflare-ipfs.com` 
+1. 新增 TXT 欄位 Hostname: `_dnslink.ipfs.miaoski.idv.tw` / TXT: `dnslink=/ipfs/QmR2PvgrHny4ispfEVygvvWkNqwjbU7hareWda41ASF5wC` 
+1. 上 https://www.cloudflare.com/distributed-web-gateway/#connectingyourwebsite 登錄
+
+這樣以後看 https://ipfs.miaoski.idv.tw/ 就會自動被轉址為 https://cloudflare-ipfs.com/ipfs/QmR2PvgrHny4ispfEVygvvWkNqwjbU7hareWda41ASF5wC 而且會有合法的 SSL 憑證。
+
+用 `nslookup` 檢查一下:
+
+```
+$ nslookup
+> set type=ANY
+> ipfs.miaoski.idv.tw.
+
+ipfs.miaoski.idv.tw	canonical name = www.cloudflare-ipfs.com.
+
+> _dnslink.ipfs.miaoski.idv.tw.
+
+_dnslink.ipfs.miaoski.idv.tw	text = "dnslink=/ipfs/QmR2PvgrHny4ispfEVygvvWkNqwjbU7hareWda41ASF5wC"
+```
+
 # 我還不懂的部份
 
 - BitSwap
@@ -256,6 +303,7 @@ Error: Could not resolve name (recursion limit exceeded).
 - https://discuss.ipfs.io/t/how-does-files-api-ipfs-files-command-work/344/3
 - https://ipfs.io/ipfs/QmdPtC3T7Kcu9iJg6hYzLBWR5XCDcYMY7HV685E3kH3EcS/2015/09/15/hosting-a-website-on-ipfs/
 - https://qtum.org/zh/blog/ru-he-shi-yong-xing-ji-wen-jian-chuan-shu-wang-luo-ipfs-da-jian-qu-kuai-lian-fu-wu
+- https://developers.cloudflare.com/distributed-web/ipfs-gateway/connecting-website/
 
 # License 版權聲明
 
